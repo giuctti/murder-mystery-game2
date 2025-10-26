@@ -3,66 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mystery Game - A1 Level</title>
+  <title>Easy Mystery Game</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
 </head>
 <body class="bg-gray-100 min-h-screen p-6">
-  <div class="max-w-6xl mx-auto">
-    <h1 class="text-4xl font-bold text-center mb-4">🔍 Mystery Game</h1>
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold text-center mb-4">🔍 Mystery Game</h1>
 
-    <section class="mb-10 bg-white p-6 rounded shadow">
-      <h2 class="text-2xl font-semibold mb-2">The Case: Mr. Blackwell is Dead</h2>
+    <section class="mb-8 bg-white p-6 rounded shadow">
+      <h2 class="text-2xl font-semibold mb-2">The Story</h2>
       <p class="text-gray-700">
-        Mr. Blackwell is **dead**. It was **8:00 PM** last night. He was in the study room.
-        The lights went **off** at **7:47 PM**. Then, a person screamed.
-        **Five** people were in the house. You must find the **killer**.
+        Last night at 8:00 PM, Mr. Blackwell was dead in the study. The lights went off at 7:45 PM and someone screamed. Seven people were in the house. Ask questions, find clues, and guess who killed Mr. Blackwell.
       </p>
     </section>
 
-    <section class="mb-10">
-      <h2 class="text-2xl font-semibold mb-4">People in the House (Suspects)</h2>
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-4" id="suspect-grid"></div>
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">Suspects</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="suspect-grid"></div>
     </section>
 
     <div id="question-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-      <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-xl">
+      <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
         <h3 class="text-xl font-bold mb-4" id="modal-title">Ask a Question</h3>
-        <p class="text-sm text-gray-600 mb-3">Make a question with these words:</p>
         <ul id="modal-word-bank" class="flex gap-2 flex-wrap p-4 bg-gray-100 rounded mb-4 min-h-[60px]"></ul>
-        <button onclick="checkModalQuestion()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Check Question</button>
+        <button onclick="checkModalQuestion()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Check</button>
         <p id="modal-result" class="mt-2 font-bold"></p>
         <button id="next-question-btn" onclick="nextModalQuestion()" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hidden">Next</button>
         <button onclick="closeModal()" class="mt-4 text-sm text-red-500 underline">Close</button>
       </div>
     </div>
 
-    <section class="mb-10">
-      <h2 class="text-2xl font-semibold mb-4">The Killer's Time</h2>
-      <p class="mb-2 text-gray-600">Write what happened (7:40 PM to 8:00 PM):</p>
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold mb-4">Killer's Timeline</h2>
+      <p class="mb-2 text-gray-600">Write what happened between 7:40 and 8:00:</p>
       <form id="timeline-form" class="bg-white rounded-lg shadow p-4 space-y-4">
         <div><label class="block font-semibold">7:40 PM</label><input type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="What happened?" id="time1"></div>
-        <div><label class="block font-semibold">7:42 PM</label><input type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="What happened?" id="time2"></div>
+        <div><label class="block font-semibold">7:45 PM</label><input type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="What happened?" id="time2"></div>
         <div><label class="block font-semibold">7:47 PM</label><input type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="What happened?" id="time3"></div>
         <div><label class="block font-semibold">7:50 PM</label><input type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="What happened?" id="time4"></div>
         <div><label class="block font-semibold">8:00 PM</label><input type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="What happened?" id="time5"></div>
-        <button type="button" onclick="checkTimeline()" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Check Time</button>
+        <button type="button" onclick="checkTimeline()" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Check</button>
         <p id="timeline-result" class="mt-2 font-bold"></p>
       </form>
     </section>
 
-    <section class="mb-10">
-      <h2 class="text-2xl font-semibold mb-4">Who is the Killer?</h2>
-      <p class="text-gray-600 mb-2">Choose the person:</p>
+    <section>
+      <h2 class="text-2xl font-semibold mb-4">Who Did It?</h2>
+      <p class="text-gray-600 mb-2">Choose the killer:</p>
       <select id="killer-guess" class="w-full max-w-xs p-2 border border-gray-300 rounded">
-        <option value="">-- Select a suspect --</option>
+        <option value="">-- Choose --</option>
         <option>Alice</option>
         <option>Bob</option>
         <option>Clara</option>
         <option>David</option>
         <option>Eva</option>
+        <option>Frank</option>
+        <option>Gina</option>
       </select>
-      <button onclick="checkKillerGuess()" class="mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">Submit Guess</button>
+      <button onclick="checkKillerGuess()" class="mt-4 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">Submit</button>
       <p id="killer-result" class="mt-2 font-bold"></p>
     </section>
   </div>
@@ -71,62 +70,81 @@
     const suspects = [
       {
         name: 'Alice',
-        job: 'Chef',
+        job: 'Cook',
         responses: {
-          q1: 'I was chopping vegetables in the kitchen.',
-          q2: 'I saw Clara. She was running to the study.',
-          q3: 'I heard a scream. The lights went off.',
-          q4: 'I ran to the hall to check the sound.'
+          q1: 'At 7:40, I was in the kitchen. I cooked dinner.',
+          q2: 'At 7:45, I saw Clara walk fast to the study.',
+          q3: 'At 7:47, the lights went off. I heard a scream.',
+          q4: 'At 7:50, I stayed in the kitchen.'
         }
       },
       {
         name: 'Bob',
         job: 'Gardener',
         responses: {
-          q1: 'I was in the garden house.',
-          q2: 'I did not see any person.',
-          q3: 'I heard a loud sound (a "thud").',
-          q4: 'I went inside the house to check the noise.'
+          q1: 'At 7:40, I was in the garden.',
+          q2: 'At 7:45, I heard a noise inside.',
+          q3: 'At 7:47, I saw the lights go off.',
+          q4: 'At 7:50, I went to the door.'
         }
       },
       {
         name: 'Clara',
         job: 'Teacher',
         responses: {
-          q1: 'I was in the lounge. I was reading a book.',
-          q2: 'I did not see any person. It was quiet.',
-          q3: 'I was still reading. Nothing unusual happened.',
-          q4: 'I was making tea in the kitchen.'
+          q1: 'At 7:40, I was in the living room.',
+          q2: 'At 7:45, I went to the study to talk to Mr. Blackwell.',
+          q3: 'At 7:47, the lights went off. I was scared.',
+          q4: 'At 7:50, I went to my room.'
         }
       },
       {
         name: 'David',
         job: 'Driver',
         responses: {
-          q1: 'I was cleaning the car outside.',
-          q2: 'I saw Eva. She was coming from upstairs.',
-          q3: 'I heard a glass break (smash).',
-          q4: 'I stayed in the garage (car place).'
+          q1: 'At 7:40, I was cleaning the car.',
+          q2: 'At 7:45, I saw Clara near the study.',
+          q3: 'At 7:47, I heard a scream.',
+          q4: 'At 7:50, I stayed outside.'
         }
       },
       {
         name: 'Eva',
         job: 'Doctor',
         responses: {
-          q1: 'I was organizing the first-aid kit.',
-          q2: 'I did not see anyone.',
-          q3: 'I heard a scream and I dropped a glass.',
-          q4: 'I cleaned the mess on the floor.'
+          q1: 'At 7:40, I was reading a book.',
+          q2: 'At 7:45, I saw Alice in the kitchen.',
+          q3: 'At 7:47, I heard a noise.',
+          q4: 'At 7:50, I went to the hall.'
+        }
+      },
+      {
+        name: 'Frank',
+        job: 'Musician',
+        responses: {
+          q1: 'At 7:40, I was playing the guitar.',
+          q2: 'At 7:45, I saw Bob outside.',
+          q3: 'At 7:47, the lights went off.',
+          q4: 'At 7:50, I stayed in the music room.'
+        }
+      },
+      {
+        name: 'Gina',
+        job: 'Librarian',
+        responses: {
+          q1: 'At 7:40, I was in the library.',
+          q2: 'At 7:45, I heard someone walking fast.',
+          q3: 'At 7:47, I heard a scream.',
+          q4: 'At 7:50, I stayed in the library.'
         }
       }
     ];
 
-    // Simplified Past Simple Questions (A1 Level)
     const allQuestions = [
-      'Where were you at 7:40 PM?',
-      'What did you see at 7:42 PM?',
-      'What happened at 7:47 PM?',
-      'Where were you at 7:50 PM?'
+      'Where were you at 7:40?',
+      'What did you see at 7:45?',
+      'What happened at 7:47?',
+      'Where were you at 7:50?'
     ];
 
     let currentSuspect = null;
@@ -137,7 +155,7 @@
       const div = document.createElement('div');
       div.className = 'bg-white p-4 rounded shadow text-center cursor-pointer hover:bg-blue-100';
       div.onclick = () => openModal(s);
-      div.innerHTML = `<h3 class="font-bold text-lg">${s.name}</h3><p class="text-sm text-gray-600">${s.job}</p>`;
+      div.innerHTML = `<h3 class='font-bold text-lg'>${s.name}</h3><p class='text-sm text-gray-600'>${s.job}</p>`;
       suspectGrid.appendChild(div);
     });
 
@@ -150,7 +168,7 @@
     }
 
     function loadModalQuestion() {
-      document.getElementById('modal-title').textContent = `Ask ${currentSuspect.name}: Question ${currentQuestionIndex + 1}`;
+      document.getElementById('modal-title').textContent = `Ask ${currentSuspect.name}`;
       const bank = document.getElementById('modal-word-bank');
       bank.innerHTML = '';
       document.getElementById('next-question-btn').classList.add('hidden');
@@ -173,10 +191,10 @@
       const result = document.getElementById('modal-result');
       if (userQuestion === expected) {
         const answer = currentSuspect.responses[`q${currentQuestionIndex + 1}`];
-        result.textContent = `✅ Correct! ${currentSuspect.name} said: "${answer}"`;
+        result.textContent = `${currentSuspect.name} said: \"${answer}\"`;
         document.getElementById('next-question-btn').classList.remove('hidden');
       } else {
-        result.textContent = '❌ Try again. The question is wrong.';
+        result.textContent = 'Try again.';
       }
     }
 
@@ -195,13 +213,12 @@
     }
 
     function checkTimeline() {
-      // Simplified expected timeline events for A1 level
       const expected = [
-        'Clara turned off the lights.', // 'Clara turned off the lights from the circuit box.'
-        'Clara hit Mr. Blackwell in the study.', // 'Clara entered the study with a blunt object.'
-        'A scream was heard.', // 'A scream was heard.'
-        'Clara ran away.', // 'Clara ran out and disposed of the weapon.'
-        'The body was found.' // 'The body was discovered by Isla.' - changed "Isla" to a simpler statement since Isla is not a suspect now.
+        'Clara turned off the lights.',
+        'Clara went into the study.',
+        'Clara hit Mr. Blackwell.',
+        'Clara ran to her room.',
+        'Alice found the body.'
       ];
 
       const userAnswers = [
@@ -213,21 +230,15 @@
       ];
 
       const result = document.getElementById('timeline-result');
-      const correctCount = userAnswers.filter((ans, i) => ans.toLowerCase() === expected[i].toLowerCase()).length;
+      const isCorrect = userAnswers.every((ans, i) => ans.toLowerCase() === expected[i].toLowerCase());
 
-      if (correctCount === expected.length) {
-          result.textContent = '✅ The time events are correct!';
-      } else {
-          result.textContent = `❌ ${correctCount} of ${expected.length} are correct. Try again.`;
-      }
+      result.textContent = isCorrect ? '✅ Correct timeline!' : '❌ Try again.';
     }
 
     function checkKillerGuess() {
-      const guess = document.getElementById("killer-guess").value;
-      const result = document.getElementById("killer-result");
-      result.textContent = guess === "Clara"
-        ? `✅ Correct! ${guess} is the killer.`
-        : `❌ Wrong guess. ${guess} is not the killer.`;
+      const guess = document.getElementById('killer-guess').value;
+      const result = document.getElementById('killer-result');
+      result.textContent = guess === 'Clara' ? `✅ Correct! ${guess} is the killer.` : `❌ No, ${guess} is not the killer.`;
     }
 
     function shuffle(arr) {
@@ -236,8 +247,6 @@
         [arr[i], arr[j]] = [arr[j], arr[i]];
       }
     }
-</script>
+  </script>
 </body>
-
 </html>
-
